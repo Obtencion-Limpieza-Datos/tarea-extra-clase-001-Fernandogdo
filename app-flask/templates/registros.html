@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trabajo Final</title>
+  <!-- Latest compiled and minified CSS -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <style>
+      body{
+        background: #d7dbdd;
+      }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <br>
+  <h2 align="center">Consulta de colegios por Canton</h2><br><br>
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="form-group">
+      <label for="primero">Ingrese el nombre o inicial del Canton:</label>
+      <input type="text" class="form-control" id="primero" name="primero" placeholder="Tipo...">
+      <br>
+    </div>
+    <button type="submit" class="btn btn-success">Consultar</button>
+  </form>
+
+  <br>
+  <hr/>
+  <h2>Listado</h2>
+  {% if data %}
+
+  <h4>Número de coincidencias {{numero}}</h4>
+  <div>
+      <table
+        <thead>
+        <tr>
+          <th>Unidad</th>
+          <th>Direccion</th>
+          <th>Ciudad</th>
+          <th>Telefono</th>
+          <th>Puesto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in data %}
+        <tr>
+          <td>{{d['unidad'].decode('utf-8')}}</td>
+          <td>{{d['direccion'].decode('utf-8')}}</td>
+          <td>{{d['ciudad'].decode('utf-8')}}</td>
+          <td>{{d['telefono']}}</td>
+          <td>{{d['puesto'].decode('utf-8')}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+  </div>
+  {% endif %}
+  <div>
+    <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+  </div>
+</div>
+</body>
+y
+</script>
+</html>
